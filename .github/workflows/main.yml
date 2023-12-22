@@ -5,7 +5,7 @@ on:
       - "main"
 env:
   AWS_REGION: ap-south-1
-  AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY }}
+  AWS_ACCESS_KEY_ID: ${{ secrets.AKIASY4DE6DUX2ERBKZT }}
   AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
   PRIVATE_SSH_KEY: ${{ secrets.AWS_SSH_KEY }}
   SERVER_PUBLIC_IP: ${{ secrets.AWS_PUBLIC_KEY }}
