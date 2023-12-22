@@ -10,6 +10,7 @@ env:
   PRIVATE_SSH_KEY: ${{ secrets.AWS_SSH_KEY }}
   SERVER_PUBLIC_IP: ${{ secrets.AWS_PUBLIC_KEY }}
   IMAGE_TAG: latest
+  REGISTRY: ${{ steps.login-ecr.outputs.registry }}
 
 jobs:
   deploy:
