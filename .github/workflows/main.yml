@@ -9,44 +9,30 @@ env:
   AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
   PRIVATE_SSH_KEY: ${{ secrets.AWS_SSH_KEY }}
   SERVER_PUBLIC_IP: ${{ secrets.AWS_PUBLIC_KEY }}
-  ECR_REGISTRY: ${{ secrets.ECR_REGISTRY }}
-  #REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-  IMAGE_TAG: latest
-  
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
-      #- name: Login to AWS ECR
-      - name: AWS ECR Login
+        uses: actions/checkout@v3
+      - name: Login to AWS ECR
+        id: login-ecr
         uses: aws-actions/amazon-ecr-login@v1
-        with:
-          mask-password: true
-          registry-type: private
-          skip-logout: false
-        # id: login-ecr
-        # uses: aws-actions/amazon-ecr-login@v1
       - name: Build, push docker image
         env:
-          ECR_REGISTRY: ${{ secrets.ECR_REGISTRY }}
-          #REGISTRY: ${{ secrets.REGISTRY }}
-         # REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+          REGISTRY: ${{ steps.login-ecr.outputs.registry }}
           REPOSITORY: aws-deploy
-          IMAGE_TAG: latest
+          IMAGE_TAG: ${{ github.sha }}
         run: |-
           docker build -t $REGISTRY/$REPOSITORY:$IMAGE_TAG .
           docker push $REGISTRY/$REPOSITORY:$IMAGE_TAG
       - name: Deploy docker image to EC2
         env:
-          ECR_REGISTRY: ${{ secrets.ECR_REGISTRY }}
-#          REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+          REGISTRY: ${{ steps.login-ecr.outputs.registry }}
           REPOSITORY: aws-deploy
-          IMAGE_TAG: latest
-          AWS_REGION: ap-south-1
-#          AWS_DEFAULT_REGION: ap-south-1
+          IMAGE_TAG: ${{ github.sha }}
+          AWS_DEFAULT_REGION: ap-south-1
         uses: appleboy/ssh-action@master
         with:
           host: ${{ env.SERVER_PUBLIC_IP }}
