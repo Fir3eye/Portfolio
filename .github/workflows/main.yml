@@ -9,8 +9,9 @@ env:
   AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
   PRIVATE_SSH_KEY: ${{ secrets.AWS_SSH_KEY }}
   SERVER_PUBLIC_IP: ${{ secrets.AWS_PUBLIC_KEY }}
-  IMAGE_TAG: latest
   REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+  IMAGE_TAG: latest
+  
 
 jobs:
   deploy:
@@ -29,7 +30,7 @@ jobs:
         # uses: aws-actions/amazon-ecr-login@v1
       - name: Build, push docker image
         env:
-          REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+          #REGISTRY: ${{ steps.login-ecr.outputs.registry }}
           REPOSITORY: aws-deploy
           IMAGE_TAG: latest
         run: |-
