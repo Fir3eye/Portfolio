@@ -1,6 +1,6 @@
 # 📢Deploy Website on S3 Bucket Using Github Actions
 
-## 📌**Note:- Change `Bucket Name` with your `bucket name` **
+## 📌**Note:- Change `Bucket Name` with your `bucket name` and chagne region with your `aws-region` **
 ```
 name: Portfolio Deployment
 
