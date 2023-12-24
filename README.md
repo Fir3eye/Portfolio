@@ -28,7 +28,7 @@ jobs:
 ```
 
 # 📢Deploy Website on EC2 Instance Using GitHub Actions and using ECR (Elastic Container Registry) 
-## 📌 **Note:- Change `REPOSITORY` with your `REPOSITORY` **
+## 📌 **Note:- Change `REPOSITORY` with your `REPOSITORY` and change region with your `aws-region` **
 
 ```
 name: Deploy to AWS
